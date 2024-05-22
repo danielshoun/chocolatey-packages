@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>alire</id>
+    <version>2.0.1</version>
+     <packageSourceUrl>https://github.com/danielshoun/chocolatey-packages/tree/main/alire</packageSourceUrl>
+    <owners>Danny Shoun</owners>
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>Alire</title>
+    <authors>alire-project</authors>
+    <projectUrl>https://alire.ada.dev/</projectUrl>
+    <iconUrl>https://rawcdn.githack.com/alire-project/alire/a016de24c16715e41fc72d51b4a190481ac9d138/resources/alr.png</iconUrl>
+    <licenseUrl>https://github.com/alire-project/alire/blob/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/alire-project/alire</projectSourceUrl>
+    <docsUrl>https://alire.ada.dev/docs/</docsUrl>
+    <bugTrackerUrl>https://github.com/alire-project/alire/issues</bugTrackerUrl>
+    <tags>alire ada gnat</tags>
+    <summary>A catalog of ready-to-use Ada libraries plus a command-line tool (alr) to obtain, build, and incorporate them into your own projects. It aims to fulfill a similar role to Rust's cargo or OCaml's opam.</summary>
+    <description>A catalog of ready-to-use Ada libraries plus a command-line tool (alr) to obtain, build, and incorporate them into your own projects. It aims to fulfill a similar role to Rust's cargo or OCaml's opam.</description>
+  </metadata>
+</package>
