@@ -1,7 +1,14 @@
-[CmdletBinding()]
+[CmdletBinding(DefaultParameterSetName = 'Update')]
 param(
+    [Parameter(ParameterSetName = 'Update')]
     [switch]$Force,
-    [switch]$Pack
+
+    [Parameter(ParameterSetName = 'Update')]
+    [Parameter(ParameterSetName = 'Repack')]
+    [switch]$Pack,
+
+    [Parameter(ParameterSetName = 'Repack', Mandatory)]
+    [switch]$Repack
 )
 
 Set-StrictMode -Version Latest
@@ -156,6 +163,22 @@ if (-not (Test-Path -LiteralPath $nuspecPath)) {
 
 if (-not (Test-Path -LiteralPath $installScriptPath)) {
     throw "Could not find install script at $installScriptPath."
+}
+
+if ($Repack) {
+    $currentVersion = Get-CurrentPackageVersion -Path $nuspecPath
+    Write-Host "Repacking Alire package at current version $currentVersion."
+
+    if ($Pack) {
+        $choco = Get-Command choco -ErrorAction SilentlyContinue
+        if (-not $choco) {
+            throw 'Chocolatey CLI was not found in PATH, so the package could not be packed.'
+        }
+
+        & $choco.Source pack $nuspecPath --outputdirectory $packageDir
+    }
+
+    return
 }
 
 $headers = Get-GitHubHeaders

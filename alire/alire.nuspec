@@ -20,4 +20,7 @@
     <summary>A catalog of ready-to-use Ada libraries plus a command-line tool (alr) to obtain, build, and incorporate them into your own projects. It aims to fulfill a similar role to Rust's cargo or OCaml's opam.</summary>
     <description>A catalog of ready-to-use Ada libraries plus a command-line tool (alr) to obtain, build, and incorporate them into your own projects. It aims to fulfill a similar role to Rust's cargo or OCaml's opam.</description>
   </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
 </package>
