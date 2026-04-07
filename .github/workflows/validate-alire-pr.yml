@@ -1,0 +1,43 @@
+name: Validate alire PR
+
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/validate-alire-package.ps1'
+      - '.github/workflows/validate-alire-pr.yml'
+      - 'alire/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-package:
+    runs-on: windows-2025
+
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Pack Chocolatey package
+        id: pack
+        run: .\.github\scripts\validate-alire-package.ps1 -Command pack
+
+      - name: Install package from build artifact
+        run: |
+          $ErrorActionPreference = 'Stop'
+          choco install alire --source="${{ steps.pack.outputs.package_source }}" --yes --no-progress
+
+      - name: Verify installed Alire version
+        run: .\.github\scripts\validate-alire-package.ps1 -Command verify-install -ExpectedVersion '${{ steps.pack.outputs.expected_alire_version }}'
+
+      - name: Uninstall package
+        run: |
+          $ErrorActionPreference = 'Stop'
+          choco uninstall alire --yes --no-progress
+
+      - name: Verify uninstall cleanup
+        run: .\.github\scripts\validate-alire-package.ps1 -Command verify-cleanup
