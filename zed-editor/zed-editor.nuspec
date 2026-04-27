@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if "Ω" doesn't appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>zed-editor</id>
+    <version>0.233.10</version>
+    <packageSourceUrl>https://github.com/danielshoun/chocolatey-packages/tree/main/zed-editor</packageSourceUrl>
+    <owners>Danny Shoun</owners>
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <title>Zed Editor</title>
+    <authors>Zed Industries</authors>
+    <projectUrl>https://zed.dev</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/zed-industries/zed@main/assets/images/zed_logo.svg</iconUrl>
+    <licenseUrl>https://github.com/zed-industries/zed/blob/main/LICENSE-GPL</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/zed-industries/zed</projectSourceUrl>
+    <docsUrl>https://zed.dev/docs</docsUrl>
+    <bugTrackerUrl>https://github.com/zed-industries/zed/issues</bugTrackerUrl>
+    <tags>zed editor development ide</tags>
+    <summary>Zed is a minimal code editor crafted for speed and collaboration with humans and AI.</summary>
+    <description>Zed is a minimal code editor crafted for speed and collaboration with humans and AI</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
