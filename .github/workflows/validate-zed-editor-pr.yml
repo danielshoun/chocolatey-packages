@@ -1,0 +1,43 @@
+name: Validate zed-editor PR
+
+on:
+  pull_request:
+    paths:
+      - '.github/scripts/validate-zed-editor-package.ps1'
+      - '.github/workflows/validate-zed-editor-pr.yml'
+      - 'zed-editor/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-package:
+    runs-on: windows-2025
+
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Pack Chocolatey package
+        id: pack
+        run: .\.github\scripts\validate-zed-editor-package.ps1 -Command pack
+
+      - name: Install package from build artifact
+        run: |
+          $ErrorActionPreference = 'Stop'
+          choco install zed-editor --source="${{ steps.pack.outputs.package_source }}" --yes --no-progress
+
+      - name: Verify installed Zed version
+        run: .\.github\scripts\validate-zed-editor-package.ps1 -Command verify-install -ExpectedVersion '${{ steps.pack.outputs.expected_zed_version }}'
+
+      - name: Uninstall package
+        run: |
+          $ErrorActionPreference = 'Stop'
+          choco uninstall zed-editor --yes --no-progress
+
+      - name: Verify uninstall cleanup
+        run: .\.github\scripts\validate-zed-editor-package.ps1 -Command verify-cleanup
