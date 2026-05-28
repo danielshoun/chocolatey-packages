@@ -1,0 +1,68 @@
+name: Publish Chocolatey packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/scripts/detect-chocolatey-version-bumps.ps1'
+      - '.github/scripts/publish-chocolatey-package.ps1'
+      - '.github/scripts/validate-alire-package.ps1'
+      - '.github/scripts/validate-zed-editor-package.ps1'
+      - '.github/workflows/publish-chocolatey-packages.yml'
+      - 'alire/**'
+      - 'zed-editor/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-chocolatey-packages
+  cancel-in-progress: false
+
+jobs:
+  detect_version_bumps:
+    name: Detect version bumps
+    runs-on: windows-2025
+
+    defaults:
+      run:
+        shell: pwsh
+
+    outputs:
+      packages: ${{ steps.detect.outputs.packages }}
+      has_packages: ${{ steps.detect.outputs.has_packages }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect package version bumps
+        id: detect
+        run: .\.github\scripts\detect-chocolatey-version-bumps.ps1 -BeforeSha '${{ github.event.before }}'
+
+  publish:
+    name: Publish ${{ matrix.package.id }} ${{ matrix.package.version }}
+    needs: detect_version_bumps
+    if: needs.detect_version_bumps.outputs.has_packages == 'true'
+    runs-on: windows-2025
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.detect_version_bumps.outputs.packages) }}
+
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Push package to Chocolatey
+        env:
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+        run: .\.github\scripts\publish-chocolatey-package.ps1 -PackageId '${{ matrix.package.id }}' -PackageVersion '${{ matrix.package.version }}' -ValidationScript '${{ matrix.package.validation_script }}'
