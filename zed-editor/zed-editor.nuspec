@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>zed-editor</id>
-    <version>1.4.2</version>
+    <version>1.4.4</version>
     <packageSourceUrl>https://github.com/danielshoun/chocolatey-packages/tree/main/zed-editor</packageSourceUrl>
     <owners>Danny Shoun</owners>
     <!-- == SOFTWARE SPECIFIC SECTION == -->
