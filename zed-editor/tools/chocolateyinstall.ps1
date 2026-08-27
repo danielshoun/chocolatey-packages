@@ -1,12 +1,12 @@
 $ErrorActionPreference = 'Stop'
-$url64      = 'https://github.com/zed-industries/zed/releases/download/v1.16.3/Zed-x86_64.exe'
+$url64      = 'https://github.com/zed-industries/zed/releases/download/v1.17.2/Zed-x86_64.exe'
 $zedCliPath = Join-Path $env:LOCALAPPDATA 'Programs\Zed\bin\zed.exe'
 
 $packageArgs = @{
   packageName    = $env:ChocolateyPackageName
   url64          = $url64
   softwareName   = 'Zed*'
-  checksum64     = '4490797a76777008ff02adf1d2423d91f721efd3cfdf1f25c6c0df2732fe087b'
+  checksum64     = '4ece660b71e6b7904970027cda0c574b547555c9fb745972ed154f69c1ba3692'
   checksumType64 = 'sha256'
   silentArgs     = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-'
 }
